@@ -31,12 +31,22 @@ class InstructorController extends Controller
         return view('instructors.edit', ['instructor'=>$instructor]);
     }
     public function update(Request $request, $id) {
-        $instructor =         $instructors = Instructor::join('users', 'users.id', '=', 'instructors.user_id')
+        $instructor = Instructor::join('users', 'users.id', '=', 'instructors.user_id')
         ->select('users.lname', 'users.fname', 'instructors.*')
         ->orderByRaw('lname', 'fname')->find($id);
         
         $instructor->update($request->all());
 
-        return redirect('/instructors')->with('info', "The record of $instructor->fname $instructor->lname.");
+        return redirect('/instructors')->with('info', "Instructor $instructor->lname, $instructor->fname has been updated.");
+    }
+    public function delete(Request $request) {
+        $instructorId = $request['instructor_id'];
+        $instructor = Instructor::join('users', 'users.id', '=', 'instructors.user_id')
+        ->select('users.lname', 'users.fname', 'instructors.*')
+        ->orderByRaw('lname', 'fname')->find($instructorId);
+        $name = $instructor->lname . ", " . $instructor->fname;
+        $instructor->delete();
+
+        return redirect('/instructors')->with('info', "Instructor $name has been deleted.");
     }
 }

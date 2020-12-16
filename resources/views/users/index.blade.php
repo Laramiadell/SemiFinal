@@ -2,15 +2,7 @@
 
 @section('content')
 
-@if($info = Session::get('info'))
-
-    <div class="card">
-        <div class="card-body bg-success text-white">
-            {{$info}}
-        </div>
-    </div>
-
-@endif
+@include('info')
 
 <div class="float-right">
     <a href="{{url('/users/create')}}" class="btn btn-primary">
@@ -36,7 +28,7 @@
             <td>{{$u->lname}}</td>
             <td>{{$u->fname}}</td>
             <td>{{$u->email}}</td>
-            <td><a href="{{url('/users/edit', ['id'=>$u])}}" class="btn btn-secondary btn-sm">...</a></td>
+            <td><a href="{{url('/users/edit', ['id'=>$u])}}" class="btn btn-info btn-sm">&#9997;</a></td>
         </tr>
 
         @endforeach
